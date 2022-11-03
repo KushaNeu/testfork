@@ -11,3 +11,4 @@ it is working
 working
 changes to the file.
 AMI will build
+given ec2 access
