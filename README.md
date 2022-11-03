@@ -9,4 +9,5 @@ it is working
 it is working
 it is working
 working
-changes to the file
+changes to the file.
+AMI will build
