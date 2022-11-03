@@ -1,0 +1,40 @@
+name: pull request check workflow
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.14.2]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Setting up Hashicorp Packer
+      uses: hashicorp-contrib/setup-packer@v1
+      with:
+        packer-version: 1.8.3
+
+    - name: Running test cases on featureBranch
+      run: npm ci
+      
+    - run: npm test
+
+    - name: Installing packer provisioners
+      run: packer init ami.pkr.hcl
+
+    - name: Running Packer template validation
+      run: packer validate ami.pkr.hcl
