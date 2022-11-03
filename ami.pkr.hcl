@@ -36,25 +36,15 @@ source "amazon-ebs" "amiwebapp" {
     max_attempts  = 50
   }
 
+    instance_type   = "t2.micro"
+    source_ami      = "${var.source_ami}"
+    ssh_username    = "${var.ssh_username}"
+
     ami_block_device_mappings {
     delete_on_termination = true
     device_name           = "/dev/xvda"
     volume_size           = 8
     volume_type           = "gp2"
-  }
-  
-  instance_type   = "t2.micro"
-  profile         = "dev"
-  
-  skip_region_validation = true
-  subnet_id       = "subnet-0dd033dd7e2cb6071"
-  source_ami      = "${var.source_ami}"
-  ssh_username    = "${var.ssh_username}"
-  
-    tags = {
-    Author      = "user"
-    Environment = "dev"
-    Tool        = "Packer"
   }
 }
 
