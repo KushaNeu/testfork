@@ -12,3 +12,5 @@ working
 changes to the file.
 AMI will build
 change
+given ec2 access
+
